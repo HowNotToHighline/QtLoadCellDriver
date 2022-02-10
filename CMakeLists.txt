@@ -28,17 +28,17 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 if(ANDROID)
   add_library(LoadCellDriver SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+          src/main.cpp
+          src/mainwindow.cpp
+          src/mainwindow.h
+          src/mainwindow.ui
   )
 else()
   add_executable(LoadCellDriver
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
+          src/main.cpp
+          src/mainwindow.cpp
+          src/mainwindow.h
+          src/mainwindow.ui
   )
 endif()
 
