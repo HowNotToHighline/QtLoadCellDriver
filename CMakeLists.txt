@@ -8,7 +8,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
@@ -25,6 +25,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #endif()
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Threads REQUIRED)
 
 if(ANDROID)
   add_library(LoadCellDriver SHARED
@@ -39,7 +40,7 @@ else()
           src/mainwindow.cpp
           src/mainwindow.h
           src/mainwindow.ui
-  )
+          src/DataAcquisition/devices/LoadCellDriver.h src/DataAcquisition/DataProcessor.cpp src/DataAcquisition/DataProcessor.h src/DataAcquisition/devices/VirtualLoadCell.cpp src/DataAcquisition/devices/VirtualLoadCell.h src/DataAcquisition/devices/LabJackDriver.cpp src/DataAcquisition/devices/LabJackDriver.h src/CallbackInterface.h)
 endif()
 
-target_link_libraries(LoadCellDriver PRIVATE Qt5::Widgets)
+target_link_libraries(LoadCellDriver PRIVATE Qt5::Widgets Threads::Threads LabJackM)

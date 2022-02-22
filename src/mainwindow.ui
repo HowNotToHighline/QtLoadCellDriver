@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -29,12 +29,15 @@
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
-          <string>LoadCell</string>
+          <string>LoadCellDriver</string>
          </property>
         </widget>
        </item>
        <item row="0" column="1">
         <widget class="QComboBox" name="comboBox">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <item>
           <property name="text">
            <string>LabJack - Jetse</string>
@@ -55,7 +58,7 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QSpinBox" name="spinBox">
+        <widget class="QSpinBox" name="sampleRate">
          <property name="suffix">
           <string> Hz</string>
          </property>
@@ -72,9 +75,15 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox">
+        <widget class="QDoubleSpinBox" name="triggerForce">
          <property name="suffix">
           <string> kN</string>
+         </property>
+         <property name="minimum">
+          <double>-99.989999999999995</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
          </property>
         </widget>
        </item>
@@ -86,9 +95,15 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+        <widget class="QDoubleSpinBox" name="stopForce">
          <property name="suffix">
           <string> kN</string>
+         </property>
+         <property name="minimum">
+          <double>-99.989999999999995</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
          </property>
         </widget>
        </item>
@@ -100,7 +115,7 @@
         </widget>
        </item>
        <item row="4" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+        <widget class="QDoubleSpinBox" name="preRecordingTime">
          <property name="suffix">
           <string> s</string>
          </property>
@@ -114,7 +129,7 @@
         </widget>
        </item>
        <item row="5" column="1">
-        <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+        <widget class="QDoubleSpinBox" name="postRecordingTime">
          <property name="suffix">
           <string> s</string>
          </property>
@@ -128,21 +143,24 @@
         </widget>
        </item>
        <item row="6" column="1">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="measurementName"/>
        </item>
       </layout>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="tareButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Zero</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_2">
+        <widget class="QPushButton" name="startButton">
          <property name="text">
           <string>Start</string>
          </property>
