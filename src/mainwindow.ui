@@ -6,21 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>308</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Jetse is awesome!</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>50</y>
+      <x>10</x>
+      <y>10</y>
       <width>288</width>
-      <height>253</height>
+      <height>284</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -50,14 +50,14 @@
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Samplerate</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QSpinBox" name="sampleRate">
          <property name="suffix">
           <string> Hz</string>
@@ -67,14 +67,14 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Trigger force</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QDoubleSpinBox" name="triggerForce">
          <property name="suffix">
           <string> kN</string>
@@ -87,14 +87,14 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Stop force</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="4" column="1">
         <widget class="QDoubleSpinBox" name="stopForce">
          <property name="suffix">
           <string> kN</string>
@@ -107,43 +107,50 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
           <string>Pre recording time</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
+       <item row="5" column="1">
         <widget class="QDoubleSpinBox" name="preRecordingTime">
          <property name="suffix">
           <string> s</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Post recording time</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
+       <item row="6" column="1">
         <widget class="QDoubleSpinBox" name="postRecordingTime">
          <property name="suffix">
           <string> s</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="7" column="0">
         <widget class="QLabel" name="label_7">
          <property name="text">
           <string>Measurement name</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
+       <item row="7" column="1">
         <widget class="QLineEdit" name="measurementName"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="connectButton">
+         <property name="text">
+          <string>Connect</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -177,7 +184,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>308</width>
      <height>22</height>
     </rect>
    </property>
