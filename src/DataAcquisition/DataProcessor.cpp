@@ -1,10 +1,9 @@
-#include <src/DataAcquisition/devices/LoadCellDriver.h>
-#include <src/DataAcquisition/devices/VirtualLoadCell.h>
 #include <stdexcept>
 #include <filesystem>
 #include <utility>
 #include <iostream>
 #include <src/DataAcquisition/devices/LabJackDriver.h>
+#include <src/DataAcquisition/devices/VirtualLoadCell.h>
 #include "DataProcessor.h"
 
 void DataProcessor::Start(StartConfig startConfig, CallbackInterface *pWindow) {
@@ -13,24 +12,21 @@ void DataProcessor::Start(StartConfig startConfig, CallbackInterface *pWindow) {
     ring_buffer_size = static_cast<int>(static_cast<float>(config.samplerate) * config.preRecordingTime);
     ring_buffer_index = 0;
     ring_buffer = new(std::nothrow) float[ring_buffer_size];
-    std::cout << "Starting thread" << std::endl;
     shouldStop = false;
     active_thread = new std::thread(&DataProcessor::Run, this, pWindow);
 }
 
 void DataProcessor::Run(CallbackInterface *pWindow) {
-    // TODO: Minimum buffer size?
     // Size the buffer so that there are 10 updates per second
     // If the samplerate is less than 10, let the buffer size be 1
     int buffer_size = std::max(config.samplerate / 10, 1);
     auto buffer = new(std::nothrow) float[buffer_size];
 
-//    LoadCellDriver *driver = new VirtualLoadCell();
-    LoadCellDriver *driver = new LabJackDriver(config.samplerate);
-
     bool triggered = false;
-//    int samplesBeforeStop = -1;
-    int samplesBeforeStop = 50;
+    int samplesBeforeStop = -1;
+//    int samplesBeforeStop = 50;
+
+    driver->StartStream(config.samplerate);
 
     while (samplesBeforeStop != 0 && !shouldStop) {
         unsigned int samples_available = driver->UpdateData(buffer, buffer_size);
@@ -61,9 +57,10 @@ void DataProcessor::Run(CallbackInterface *pWindow) {
         }
     }
 
+    driver->StopStream();
+
     StoreToDisk();
 
-    delete driver;
     active_thread = nullptr;
     pWindow->stopped();
 }
@@ -74,6 +71,7 @@ void DataProcessor::Stop() {
 }
 
 void DataProcessor::StoreToDisk() {
+    printf("StoreToDisk\n");
 
 //    printf("Storing to disk\n");
 //    BufferBlock *tmp = first_buffer_block;
@@ -140,4 +138,26 @@ void DataProcessor::DataBlockCreate() {
     last_buffer_block->capacity = size;
     if (prev_last_buffer_block != nullptr) prev_last_buffer_block->next = last_buffer_block;
     if (first_buffer_block == nullptr) first_buffer_block = last_buffer_block;
+}
+
+void DataProcessor::Connect() {
+    if(driver != nullptr) return;
+//    driver = new VirtualLoadCell();
+    driver = new LabJackDriver();
+}
+
+void DataProcessor::DisConnect() {
+    if(driver == nullptr) return;
+    delete driver;
+    driver = nullptr;
+}
+
+void DataProcessor::Tare() {
+    if(driver == nullptr) return;
+    driver->Tare();
+}
+
+void DataProcessor::Calibrate(float force) {
+    if(driver == nullptr) return;
+    driver->Calibrate(force);
 }

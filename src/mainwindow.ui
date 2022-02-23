@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>308</width>
-    <height>320</height>
+    <width>312</width>
+    <height>406</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -168,12 +168,55 @@
        </item>
        <item>
         <widget class="QPushButton" name="startButton">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="text">
           <string>Start</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>300</y>
+      <width>288</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Calibration force</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="calibrationForce">
+         <property name="suffix">
+          <string> kN</string>
+         </property>
+         <property name="minimum">
+          <double>-99.989999999999995</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="calibrationButton">
+       <property name="text">
+        <string>Calibrate</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -184,7 +227,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>308</width>
+     <width>312</width>
      <height>22</height>
     </rect>
    </property>

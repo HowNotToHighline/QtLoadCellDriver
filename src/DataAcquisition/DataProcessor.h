@@ -6,6 +6,7 @@
 #include <fstream>
 #include <thread>
 #include <src/CallbackInterface.h>
+#include <src/DataAcquisition/devices/LoadCellDriver.h>
 
 struct StartConfig {
     void *loadCellConfig;
@@ -32,6 +33,14 @@ public:
         BufferBlock *next = nullptr;
     };
 
+    void Connect();
+
+    void DisConnect();
+
+    void Tare();
+
+    void Calibrate(float force);
+
 private:
     void Run(CallbackInterface *pWindow);
 
@@ -54,6 +63,7 @@ private:
 
     std::thread *active_thread = nullptr;
     bool shouldStop = false;
+    LoadCellDriver *driver;
 };
 
 

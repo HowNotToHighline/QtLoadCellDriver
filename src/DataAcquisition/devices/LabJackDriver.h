@@ -6,14 +6,28 @@
 
 class LabJackDriver : public LoadCellDriver {
 public:
-    explicit LabJackDriver(unsigned int samplerate);
+    LabJackDriver();
+
+    void StartStream(unsigned int samplerate) override;
+
+    void StopStream() override;
 
     unsigned int UpdateData(float *buffer, unsigned int buffer_size) override;
+
+    void Tare() override;
+
+    void Calibrate(float force) override;
 
     ~LabJackDriver() override;
 
 private:
+    [[nodiscard]] float rawToForce(double raw) const;
+
+    static double optimalResolutionIndex(unsigned int samplerate);
+
     int handle = -1;
+    double offset = 0.000036;
+    double scalar = 0.000325;
 };
 
 

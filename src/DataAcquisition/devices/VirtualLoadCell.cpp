@@ -1,4 +1,9 @@
+#include <thread>
 #include "VirtualLoadCell.h"
+
+void VirtualLoadCell::StartStream(unsigned int samplerate) {
+    _samplerate = samplerate;
+}
 
 unsigned int VirtualLoadCell::UpdateData(float *buffer, unsigned int buffer_size) {
     int size_written = 0;
@@ -9,6 +14,8 @@ unsigned int VirtualLoadCell::UpdateData(float *buffer, unsigned int buffer_size
                                                                    : 0;
         samples_generated++;
     }
+
+    std::this_thread::sleep_for(std::chrono::milliseconds((1000 * buffer_size) / _samplerate));
 
     return size_written;
 }

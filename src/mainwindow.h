@@ -20,12 +20,19 @@ public:
     ~MainWindow() override;
 
 private slots:
+    void on_connectButton_clicked();
+
     void on_startButton_clicked();
+
+    void on_tareButton_clicked();
+
+    void on_calibrationButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     DataProcessor &_dataProcessor;
     bool started = false;
+    bool connected = false;
 };
 
 #endif // MAINWINDOW_H
