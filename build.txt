@@ -1,0 +1,3 @@
+#/opt/mxe/usr/x86_64-pc-linux-gnu/bin/cmake .
+CMAKE_PREFIX_PATH=/opt/mxe/usr/x86_64-w64-mingw32.shared/qt5/lib/cmake/Qt5 /opt/mxe/usr/x86_64-pc-linux-gnu/bin/cmake .
+make -j $(nproc)

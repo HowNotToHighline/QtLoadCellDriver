@@ -26,8 +26,8 @@ private:
     static double optimalResolutionIndex(unsigned int samplerate);
 
     int handle = -1;
-    double offset = 0.000036;
-    double scalar = 0.000325;
+    double offset = 0.000033;
+    double scalar = 0.000394;
 };
 
 

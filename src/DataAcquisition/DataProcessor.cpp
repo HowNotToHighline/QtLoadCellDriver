@@ -59,7 +59,25 @@ void DataProcessor::Run(CallbackInterface *pWindow) {
 
     driver->StopStream();
 
+//    // TODO: Added for testing
+//    DataBlockAdd(&ring_buffer[ring_buffer_index], ring_buffer_size - ring_buffer_index);
+//    DataBlockAdd(&ring_buffer[0], ring_buffer_index);
+
     StoreToDisk();
+
+    BufferBlock *tmp = first_buffer_block;
+    while (tmp != nullptr) {
+        BufferBlock *tmpNext = tmp->next;
+        delete tmp->buffer;
+        delete tmp;
+        tmp = tmpNext;
+    }
+    first_buffer_block = nullptr;
+    last_buffer_block = first_buffer_block;
+
+    ring_buffer_size = 0;
+    ring_buffer_index = 0;
+    delete ring_buffer;
 
     active_thread = nullptr;
     pWindow->stopped();
@@ -71,36 +89,41 @@ void DataProcessor::Stop() {
 }
 
 void DataProcessor::StoreToDisk() {
-    printf("StoreToDisk\n");
-
-//    printf("Storing to disk\n");
-//    BufferBlock *tmp = first_buffer_block;
-//    int blockNr = 0;
-//    while (tmp != nullptr) {
-//        printf("\nblockNr: %d\tcapacity: %u\tindex: %u\tdata:", blockNr, tmp->capacity, tmp->index);
-//        for (int i = 0; i < tmp->index; ++i) {
-//            printf(" %.2f", tmp->buffer[i]);
-//        }
-//        printf("\n");
-//
-//        blockNr++;
-//        tmp = tmp->next;
-//    }
-//    printf("\nDone writing\n");
-
-//    auto tmp = first_buffer_block;
-//
-//    time_t t = time(nullptr);
-//    char timestamp_prefix[80];
-//    strftime(timestamp_prefix, 80, "%d-%m-%Y_%H:%M:%S_", localtime(&t));
+    time_t t = time(nullptr);
+    char timestamp_prefix[80];
+    strftime(timestamp_prefix, 80, "%d-%m-%Y_%H:%M:%S_", localtime(&t));
+    // TODO: Create logs directory if not exists
+    std::string directory = "./logs/";
 //    std::string directory = "./";
-//    std::string file_name = directory + std::string(timestamp_prefix) + config.measurementName + ".csv";
-//
-//    // TODO: Deal with this better
-//    if (std::filesystem::exists(file_name)) throw std::runtime_error("Log file already exists!");
-//    std::ofstream new_file;
-//    new_file.open(file_name);
-//    if (!new_file) throw std::runtime_error("Log file creation failed");
+    std::string file_name = directory + std::string(timestamp_prefix) + config.measurementName + ".csv";
+
+    // TODO: Deal with this better
+    if (std::filesystem::exists(file_name)) throw std::runtime_error("Log file already exists!");
+    printf("file_name: %s\n", file_name.c_str());
+    std::ofstream new_file(file_name);
+    if (!new_file) throw std::runtime_error("Log file creation failed");
+
+    // TODO: Write header
+
+    printf("Storing to disk\n");
+    BufferBlock *tmp = first_buffer_block;
+    char buf[50]; // 9 should be enough, 20 just to be sure
+    int blockNr = 0;
+    while (tmp != nullptr) {
+        printf("\nblockNr: %d\tcapacity: %u\tindex: %u\n", blockNr, tmp->capacity, tmp->index);
+        for (int i = 0; i < tmp->index; ++i) {
+//            printf(" %.2f", tmp->buffer[i]);
+            // TODO: Set locale to write period instead of comma
+//            new_file.write(buf, sprintf(buf, "%.2f\n", tmp->buffer[i]));
+            new_file.write(buf, sprintf(buf, "%f\n", tmp->buffer[i]));
+        }
+
+        blockNr++;
+        tmp = tmp->next;
+    }
+
+    new_file.close();
+    printf("\nDone writing\n");
 }
 
 void DataProcessor::RingBufferPush(float sample) {

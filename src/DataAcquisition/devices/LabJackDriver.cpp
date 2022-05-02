@@ -82,7 +82,8 @@ void LabJackDriver::Calibrate(float force) {
 }
 
 float LabJackDriver::rawToForce(double raw) const {
-    return static_cast<float>((raw - offset) / scalar);
+//    return static_cast<float>((raw - offset) / scalar);
+    return raw;
 }
 
 double LabJackDriver::optimalResolutionIndex(unsigned int samplerate) {
