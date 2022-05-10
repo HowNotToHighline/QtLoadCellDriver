@@ -1,3 +1,13 @@
 #/opt/mxe/usr/x86_64-pc-linux-gnu/bin/cmake .
-CMAKE_PREFIX_PATH=/opt/mxe/usr/x86_64-w64-mingw32.shared/qt5/lib/cmake/Qt5 /opt/mxe/usr/x86_64-pc-linux-gnu/bin/cmake .
+#CMAKE_PREFIX_PATH=/opt/mxe/usr/x86_64-w64-mingw32.shared/qt5/lib/cmake/Qt5 /opt/mxe/usr/x86_64-pc-linux-gnu/bin/cmake .
+#make -j $(nproc)
+
+
+rm -rf CMakeCache.txt CMakeFiles/ LoadCellDriver_autogen/ Makefile cmake_install.cmake
+cmake .
 make -j $(nproc)
+
+
+cp /opt/mxe/usr/x86_64-w64-mingw32.shared/bin/*.dll LoadCellDriver.exe.local/
+cp /opt/mxe/usr/x86_64-w64-mingw32.shared/qt5/bin/*.dll LoadCellDriver.exe.local/
+cp /opt/mxe/usr/x86_64-w64-mingw32.shared/qt5/plugins/**/*.dll LoadCellDriver.exe.local/

@@ -8,8 +8,8 @@
 
 
 #ifdef _WIN32
-#include <Winsock2.h>
-	#include <ws2tcpip.h>
+//#include <Winsock2.h>
+//	#include <ws2tcpip.h>
 #else
 #include <unistd.h> // For sleep() (with Mac OS or Linux).
 #include <arpa/inet.h>  // For inet_ntoa()
@@ -470,14 +470,14 @@ void ErrorCheckWithAddress(int err, int errAddress, const char * description,
     va_end (args);
 }
 
-void MillisecondSleep(unsigned int milliseconds)
-{
-#ifdef _WIN32
-    Sleep(milliseconds);
-#else
-    usleep(milliseconds*1000);
-#endif
-}
+//void MillisecondSleep(unsigned int milliseconds)
+//{
+//#ifdef _WIN32
+//    Sleep(milliseconds);
+//#else
+//    usleep(milliseconds*1000);
+//#endif
+//}
 
 double Get(int handle, const char * valueName)
 {
