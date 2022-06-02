@@ -40,7 +40,7 @@ else()
           src/mainwindow.cpp
           src/mainwindow.h
           src/mainwindow.ui
-          src/DataAcquisition/devices/LoadCellDriver.h src/DataAcquisition/DataProcessor.cpp src/DataAcquisition/DataProcessor.h src/DataAcquisition/devices/VirtualLoadCell.cpp src/DataAcquisition/devices/VirtualLoadCell.h src/DataAcquisition/devices/LabJackDriver.cpp src/DataAcquisition/devices/LabJackDriver.h src/CallbackInterface.h)
+          src/DataAcquisition/devices/LoadCellDriver.h src/DataAcquisition/DataProcessor.cpp src/DataAcquisition/DataProcessor.h src/DataAcquisition/devices/VirtualLoadCell.cpp src/DataAcquisition/devices/VirtualLoadCell.h src/DataAcquisition/devices/LabJackDriver.cpp src/DataAcquisition/devices/LabJackDriver.h src/CallbackInterface.h src/DataAcquisition/devices/LoadCellDriverFactory.cpp src/DataAcquisition/devices/LoadCellDriverFactory.h)
 endif()
 
 target_link_libraries(LoadCellDriver PRIVATE Qt5::Widgets Threads::Threads LabJackM)

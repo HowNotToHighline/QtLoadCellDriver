@@ -87,3 +87,7 @@ _deps
 # Idea
 .idea/
 cmake-build-debug/
+
+# QT Creator (I think)
+.cmake/
+LoadCellDriver_autogen/

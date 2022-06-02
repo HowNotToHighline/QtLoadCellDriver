@@ -1,11 +1,42 @@
+#include <QSettings>
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <string>
+#include "./DataAcquisition/devices/LoadCellDriverFactory.h"
 
 MainWindow::MainWindow(DataProcessor &dataProcessor)
         : QMainWindow(nullptr),
           ui(new Ui::MainWindow),
           _dataProcessor(dataProcessor) {
     ui->setupUi(this);
+
+    printf("Loading loadcell drivers\n");
+    QSettings settings("configs/drivers.ini", QSettings::IniFormat);
+    QStringList drivers = settings.childGroups();
+    for (const QString &driverName: drivers) {
+        // FIXME: Nicer way to print QString's
+        printf("Driver loaded: %s\n", driverName.toStdString().c_str());
+
+        settings.beginGroup(driverName);
+        QString driver = settings.value("driver", "").toString();
+        if (driver.isNull()) throw std::runtime_error("No driver specified in ini config!");
+
+        settings.beginGroup(driver);
+        std::map<std::string, std::string> options;
+        for (const auto &optionKey: settings.allKeys()) {
+            options.insert(std::pair<std::string, std::string>(optionKey.toStdString(), settings.value(
+                    optionKey).value<QString>().toStdString()));
+        }
+        settings.endGroup();
+
+        if (!LoadCellDriverFactory::isValidConfig(driver.toStdString(), options)) {
+            throw std::runtime_error("Invalid config for driver!");
+        }
+        // TODO: Add option to dropdown list
+
+        settings.endGroup();
+    }
+    printf("Done loading loadcell drivers\n");
 }
 
 MainWindow::~MainWindow() {
@@ -13,7 +44,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_connectButton_clicked() {
-    if(connected) {
+    if (connected) {
         _dataProcessor.DisConnect();
         connected = false;
         ui->connectButton->setText("Connect");
@@ -29,7 +60,7 @@ void MainWindow::on_connectButton_clicked() {
 }
 
 void MainWindow::on_startButton_clicked() {
-    if(started) {
+    if (started) {
         ui->startButton->setEnabled(false);
         _dataProcessor.Stop();
     } else {
